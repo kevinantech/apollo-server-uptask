@@ -1,8 +1,8 @@
 import { ApolloServer} from "@apollo/server";
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { dbConnect } from "./config";
-import typeDefs from "./schema";
-import resolvers from "./resolvers";
+import typeDefs from "./database/schema";
+import resolvers from "./database/resolvers";
 
 (async function() {
 

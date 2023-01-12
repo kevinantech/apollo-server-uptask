@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 import 'dotenv/config'
 async function dbConnect(): Promise<void> {
   try {
-    const dbAccess= <string> process.env.DB_ACCESS;
+    
+    const dbAccess= <string> process.env.DB_URI;
     await mongoose.connect(dbAccess);
 
   } catch (error) {

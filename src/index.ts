@@ -3,20 +3,17 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { dbConnect } from "./config";
 import typeDefs from "./database/schema";
 import resolvers from "./database/resolvers";
+import { authToken } from "./database/context.values";
 
-(async function() {
-
+const bootstrap = async () => {
   dbConnect();
-
-  const Server = new ApolloServer({
-    typeDefs,
-    resolvers
-  });
-  
+  const Server = new ApolloServer({ typeDefs, resolvers});
   const { url } = await startStandaloneServer(Server, {
-    listen: { port: 4000 },
+    context: async ({req}) => ({
+      auth: authToken(req.headers.authorization)
+    }),
+    listen: { port: 4000 }
   });
-
   console.log(`🚀  Server ready at: ${url}`);
-
-}())
+}
+bootstrap();

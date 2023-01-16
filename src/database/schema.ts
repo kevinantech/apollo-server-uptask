@@ -1,15 +1,16 @@
 const typeDefs = `
-    type Book {
-        title: String
-        author: String
-    }
 
-    type Query {
-        books: [Book]
+    type Project {
+        name: String
+        id: ID
     }
 
     type Token {
         token: String
+    }
+
+    type Query {
+        projects: [Project]
     }
 
     input UserInput {
@@ -23,9 +24,14 @@ const typeDefs = `
         password: String!
     }
 
+    input ProjectInput {
+        name: String!
+    }
+
     type Mutation {
         createUser(input: UserInput): String
         authUser(input: AuthUserInput): Token
+        createProject(input: ProjectInput): Project
     }
 `;
 export default typeDefs;

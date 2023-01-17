@@ -9,10 +9,6 @@ const typeDefs = `
         token: String
     }
 
-    type Query {
-        projects: [Project]
-    }
-
     input UserInput {
         name: String!
         email: String!
@@ -23,15 +19,21 @@ const typeDefs = `
         email: String!
         password: String!
     }
-
+    
     input ProjectInput {
         name: String!
+    }
+    
+    type Query {
+        projects: [Project]
     }
 
     type Mutation {
         createUser(input: UserInput): String
         authUser(input: AuthUserInput): Token
         createProject(input: ProjectInput): Project
+        updateProject(id: ID!, input: ProjectInput): Project
+        deleteProject(id: ID!): String
     }
 `;
 export default typeDefs;

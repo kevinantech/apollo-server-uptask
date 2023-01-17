@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Project } from "../interfaces/project.interface";
+import type { Project } from "../../types";
 
 const ProjectSchema = new Schema<Project>(
     {
@@ -8,8 +8,8 @@ const ProjectSchema = new Schema<Project>(
             require: true,
             trim: true
         },
-        author: {
-            type: Schema.Types.ObjectId,
+        author_id: {
+            type: String,
             required: true,
             ref: 'User'
         }

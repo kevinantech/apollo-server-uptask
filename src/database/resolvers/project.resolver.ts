@@ -1,5 +1,5 @@
 import { ProjectModel } from "../../models/project.model";
-import type { ProjectInputDto } from "../../dto/project.dto";
+import type { ProjectInput } from "../../../types";
 
 export class ProjectResolver { 
   
@@ -10,11 +10,11 @@ export class ProjectResolver {
     return projects;
   }
   
-  static async create (_: any, { input }: { input: ProjectInputDto }, context: any) {
+  static async create (_: any, { input }: { input: ProjectInput }, context: any) {
     if(!context.auth?.id) throw new Error('No permissions');
     try {
       const newProject = new ProjectModel(input);
-      newProject.author = context.auth.id;
+      newProject.author_id = context.auth.id;
       const result = await newProject.save();
       return result;
     } catch (e) {
@@ -23,12 +23,12 @@ export class ProjectResolver {
     return 'Something is wrong';
   }
 
-  static async update (_: any, { id, input }: { id: string, input: ProjectInputDto }, context: any) {
+  static async update (_: any, { id, input }: { id: string, input: ProjectInput }, context: any) {
     // Verifica si el proyecto existe.
     const project = await ProjectModel.findById(id);
     if(!project) throw new Error('The project does not exist');
     // Verifica si el que trata de modificar el proyecto es el creador
-    if( project.author.toString() !== context.auth?.id ) throw new Error('No permissions');
+    if( project.author_id.toString() !== context.auth?.id ) throw new Error('No permissions');
 
     const updatedProject = await ProjectModel.findOneAndUpdate({ _id: id }, input, { new:true });
     return updatedProject;
@@ -39,7 +39,7 @@ export class ProjectResolver {
     const project = await ProjectModel.findById(id);
     if(!project) throw new Error('The project does not exist');
     // Verifica si el que trata de modificar el proyecto es el creador
-    if( project.author.toString() !== context.auth?.id ) throw new Error('No permissions');
+    if( project.author_id.toString() !== context.auth?.id ) throw new Error('No permissions');
 
     try{
       await ProjectModel.deleteOne({ _id: id });

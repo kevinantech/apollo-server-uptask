@@ -1,6 +1,6 @@
 import { UserModel } from "../../models/user.model";
-import { UserLoginDto } from "../../dto/user.dto";
-import { User } from "../../interfaces/user.interface";
+import type { AuthUserInput } from "../../../types";
+import type { User } from "../../../types";
 import { genToken } from "../../utils";
 import bcrypt from 'bcryptjs';
 import "dotenv/config";
@@ -26,7 +26,7 @@ export class UserResolver {
     return "The user has successfully registered";
   }
 
-  static async auth(_: any, {input}: {input: UserLoginDto}) {
+  static async auth(_: any, {input}: {input: AuthUserInput}) {
     const { email, password } = input;
     const exist = await UserModel.findOne({email});
     if (!exist) {

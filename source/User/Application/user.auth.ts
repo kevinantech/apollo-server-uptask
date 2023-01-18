@@ -1,12 +1,14 @@
 import { UserRepository } from "../Domain/user.repository";
-/* import { User } from "../Domain/user.value"; */
+import { genToken } from "./utils";
 
-/**
- * FIXME: Communicate with infrastructure to receive if the email exist and if the 
- * password match with the registered user.
- * TODO: Communicate with infrastructure wihtout breaking the clean architecture.
- */
-const AuthUser = async (/* { email, password }: { email: string, password: string}, */ _userRepository: UserRepository) => {
-    
+const AuthUser = async ({ email, password }: { email: string, password: string}, userRepository: UserRepository): Promise<{ token: string } | null> => {
+
+    const authData = await userRepository.Auth({ email, password });
+    if(!authData) return null;
+
+    const { ID } = authData;
+    const token = genToken({ ID, email }, <string> process.env.SECRET, '2h');
+    return {token};
 }
+
 export default AuthUser;

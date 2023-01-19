@@ -3,7 +3,7 @@ import { UserRepository } from "../Domain/user.repository";
 import { UserModel } from "./user.model";
 import bcrypt from "bcryptjs";
 
-export class DatabaseRepository implements UserRepository {
+export class UserDatabaseRepository implements UserRepository {
 
     async Create(user: IUser): Promise<{ ID: string } | null> {
 

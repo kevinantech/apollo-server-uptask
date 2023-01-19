@@ -1,15 +1,16 @@
-import { dbConnect } from "../config";
-import { AppResolvers } from "./app.resolver";
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/dist/esm/standalone";
-import { auth } from "./app.context";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import { Resolvers } from "./GraphQL/Resolvers";
+import { TypeDefs } from "./GraphQL/TypeDefs";
+import { dbConnect } from "../config";
+import { auth } from "./GraphQL/context.values";
 
 const Bootstrap = async () => {
 
     dbConnect();
     const Server = new ApolloServer({
-        typeDefs: "",
-        resolvers: AppResolvers
+        typeDefs: TypeDefs,
+        resolvers: Resolvers
     })
 
     const { url } = await startStandaloneServer(Server, {

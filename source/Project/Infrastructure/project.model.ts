@@ -1,15 +1,20 @@
 import { Schema, model } from "mongoose";
-import { Project } from "../interfaces/project.interface";
+import { IProject } from "../Domain/project.entity";
 
-const ProjectSchema = new Schema<Project>(
+const ProjectSchema = new Schema<IProject>(
     {
+        ID: {
+            type: String,
+            require: true,
+            unique: true
+        },
         name: {
             type: String,
             require: true,
             trim: true
         },
-        author: {
-            type: Schema.Types.ObjectId,
+        AUTHOR_ID: {
+            type: String,
             required: true,
             ref: 'User'
         }

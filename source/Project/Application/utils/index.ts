@@ -1,0 +1,5 @@
+const RemoveAttributesFromObjectsArray = () => {
+
+}
+
+export {RemoveAttributesFromObjectsArray};

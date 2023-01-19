@@ -1,21 +1,23 @@
-import { DatabaseRepository } from "./database.repository";
-import CreateUser from "../Application/user.create";
-import AuthUser from "../Application/user.auth";
+import { UCUser } from "../Application/user.usecases";
 
+//TODO: Use class-validator
 export class UserResolver {
+    
+    constructor(private useCases: UCUser){
+        this.Auth = this.Auth.bind(this);
+        this.Create = this.Create.bind(this);
+    }
 
-    public async CreateUser(_: any, args: any, _context: any): Promise<{ ID: string } | null> {
+    public async Create(_: any, args: any): Promise<{ ID: string } | null> {
         const { name, email, password } = args.input;
-        const userRepo = new DatabaseRepository();
-        const result = CreateUser({ name, email, password }, userRepo);        
+        const result = await this.useCases.Create({ name, email, password });        
         if(!result) return null;
         return result;
     }
 
-    public async AuthUser(_: any, args: any, _context: any){
+    public async Auth(_: any, args: any){
         const { email, password } = args.input;
-        const userRepo = new DatabaseRepository();
-        const result = AuthUser({ email, password }, userRepo);
+        const result = await this.useCases.Auth({ email, password });
         if(!result) return null;
         return result;
     }

@@ -4,6 +4,7 @@ const UserSchema = new Schema<IUser>(
     {
         ID: {
             type: String,
+            unique: true,
             required: true
         },
         name: {
@@ -24,11 +25,7 @@ const UserSchema = new Schema<IUser>(
         }
     },
     {   
-        // No asigna un ID por defecto a los documentos.
-        _id: false, id: false,
-        // Añade informacion de la fecha de creación y actualización en los documentos.
         timestamps: true,
-        // No añade informacion de la version al docomento.
         versionKey: false
     }
 )

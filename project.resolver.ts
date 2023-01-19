@@ -1,5 +1,5 @@
-import { ProjectModel } from "../../models/project.model";
-import type { ProjectInputDto } from "../../dto/project.dto";
+import { ProjectModel } from "./src/models/project.model";
+import type { ProjectInputDto } from "./src/dto/project.dto";
 
 export class ProjectResolver { 
   

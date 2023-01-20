@@ -25,7 +25,7 @@ const UserSchema = new Schema<IUser>(
         }
     },
     {   
-        timestamps: true,
+        timestamps: false,
         versionKey: false
     }
 )

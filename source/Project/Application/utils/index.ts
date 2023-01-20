@@ -1,5 +1,0 @@
-const RemoveAttributesFromObjectsArray = () => {
-
-}
-
-export {RemoveAttributesFromObjectsArray};

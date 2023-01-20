@@ -13,6 +13,11 @@ const ProjectSchema = new Schema<IProject>(
             require: true,
             trim: true
         },
+        created: {
+            type: Date,
+            required: true
+        }
+        ,
         AUTHOR_ID: {
             type: String,
             required: true,
@@ -20,7 +25,7 @@ const ProjectSchema = new Schema<IProject>(
         }
     },
     {
-        timestamps: true,
+        timestamps: false,
         versionKey: false
     }
 );

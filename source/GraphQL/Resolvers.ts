@@ -15,7 +15,7 @@ const projectRepo = new ProjectDatabaseRepository();
 const projectUseCases = new UCProject(projectRepo);
 const projectResolver = new ProjectResolver(projectUseCases);
 
-
+//
 
 const Resolvers = {
     Query: {
@@ -24,6 +24,9 @@ const Resolvers = {
     },
     Mutation: {
         CreateUser: userResolver.Create,
+        CreateProject: projectResolver.Create,
+        UpdateProject: projectResolver.Update,
+        DeleteProject: projectResolver.Delete
     }
 }
 

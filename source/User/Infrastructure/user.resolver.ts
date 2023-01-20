@@ -8,14 +8,14 @@ export class UserResolver {
         this.Create = this.Create.bind(this);
     }
 
-    public async Create(_: any, args: any): Promise<{ ID: string } | null> {
+    public async Create(_: any, args: any): Promise<{ID: string} | null> {
         const { name, email, password } = args.input;
         const result = await this.useCases.Create({ name, email, password });        
         if(!result) return null;
         return result;
     }
 
-    public async Auth(_: any, args: any){
+    public async Auth(_: any, args: any): Promise<{token: string} | null> {
         const { email, password } = args.input;
         const result = await this.useCases.Auth({ email, password });
         if(!result) return null;

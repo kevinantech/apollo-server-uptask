@@ -44,7 +44,7 @@ export class ProjectDatabaseRepository implements ProjectRepository {
             const exists = await ProjectModel.findOne(filter);
             if(!exists) throw new Error('The project does not exist');
 
-            //Verify that user match with the project autor.
+            // Verify that user match with the project autor.
             if(exists.AUTHOR_ID != CURRENT_EDITOR) throw new Error("You dont have permissions");
 
             const { name } = <IProject> await ProjectModel.findOneAndUpdate(filter, changes, { new: true });
@@ -67,7 +67,7 @@ export class ProjectDatabaseRepository implements ProjectRepository {
             const exists = await ProjectModel.findOne(filter);
             if(!exists) throw new Error('The project does not exist');
 
-            //Verify that user match with the project autor.
+            // Verify that user match with the project autor.
             if(exists.AUTHOR_ID != CURRENT_EDITOR) throw new Error("You dont have permissions");
 
             await ProjectModel.deleteOne(filter);

@@ -15,7 +15,7 @@ export class UCUser {
         // Gen token
         const { ID } = authData;
         const token = genToken({ ID, email }, <string> process.env.SECRET, '2h');
-        return {token};
+        return { token };
     }
 
     public async Create({ name, email, password }: { name: string, email: string, password: string}): Promise<{ ID: string } | null> {

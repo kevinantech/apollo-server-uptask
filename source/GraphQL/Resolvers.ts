@@ -1,9 +1,9 @@
-import { UCUser } from "../User/Application/user.usecases";
-import { ProjectDatabaseRepository } from "../Project/Infrastructure/project.database";
-import { UserDatabaseRepository } from "../User/Infrastructure/user.database";
-import { UserResolver } from "../User/Infrastructure/user.resolver";
-import { UCProject } from "../Project/Application/project.usecases";
-import { ProjectResolver } from "../Project/Infrastructure/project.resolver";
+import { UserDatabaseRepository } from "../user/Infrastructure/user.database";
+import { UCUser } from "../user/Application/user.usecases";
+import { UserResolver } from "../user/Infrastructure/user.resolver";
+import { ProjectDatabaseRepository } from "../project/Infrastructure/project.database";
+import { UCProject } from "../project/Application/project.usecases";
+import { ProjectResolver } from "../project/Infrastructure/project.resolver";
 
 // User's dependency injection 
 const userRepo = new UserDatabaseRepository();

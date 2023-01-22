@@ -3,5 +3,6 @@ export interface ITask {
     name: string
     status: boolean
     created: Date
-    PROJECT_ID: string
+    project_ID: string
+    author_ID: string
 }

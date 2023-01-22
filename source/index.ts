@@ -15,7 +15,7 @@ const Bootstrap = async () => {
 
     const { url } = await startStandaloneServer(Server, {
         listen: { port: 4000 },
-        context: async ({req}) => ({
+        context: async ({ req }) => ({
             authorization: AuthToken(req.headers.authorization)
         })
     })

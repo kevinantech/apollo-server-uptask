@@ -21,7 +21,11 @@ const TaskSchema = new Schema<ITask>(
             type: Date,
             required: true
         },
-        PROJECT_ID: {
+        project_ID: {
+            type: String,
+            required: true
+        },
+        author_ID: {
             type: String,
             required: true
         }

@@ -24,9 +24,15 @@ const TypeDefs = `
 
     input CreateTaskInput {
         name: String!
-        PROJECT_ID: ID!
+        project_ID: ID!
     }
     
+    input UpdateTaskInput {
+        ID: ID!
+        name: String
+        status: Boolean
+        project_ID: ID
+    }
     
     # RESPONSE TYPES
 
@@ -47,7 +53,7 @@ const TypeDefs = `
         ID: ID
         name: String
         status: Boolean
-        PROJECT_ID: ID
+        project_ID: ID
     }
 
 
@@ -70,6 +76,7 @@ const TypeDefs = `
 
         # TASK
         CreateTask(input: CreateTaskInput): Task
+        UpdateTask(input: UpdateTaskInput): Task
 
     }
 `;

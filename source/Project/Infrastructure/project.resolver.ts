@@ -10,45 +10,45 @@ export class ProjectResolver {
 
     public async GetAll(_: any, __: any, context: any): Promise<{ID: string, name: string}[] | null> {
 
-        if (!context.Auth) return null;
+        if (!context.authorization) return null;
 
-        const AUTHOR_ID = <string> context.Auth.ID;
-        const result = await this.projectUseCases.GetAll(AUTHOR_ID);
+        const AUTH_ID: string = context.authorization.ID;
+        const result = await this.projectUseCases.GetAll(AUTH_ID);
         return result;
     }
     
-    public async Create(_: any, args: any, context: any): Promise<{ID: string} | null> {
+    public async Create(_: any, { input }: any, context: any): Promise<{ID: string, name: string} | null> {
 
-        if (!context.Auth) return null;
-
+        if (!context.authorization) return null;
+        const AUTH_ID: string = context.authorization.ID
         const result = await this.projectUseCases.Create({
-            name: <string> args.name,
-            AUTHOR_ID: <string> context.Auth.ID
+            name: <string> input.name,
+            AUTHOR_ID: AUTH_ID
         });
         return result;
     }
 
-    public async Update(_: any, args: any, context: any): Promise<{name: string} | null> {
+    public async Update(_: any, { input }: any, context: any): Promise<{ID: string, name: string} | null> {
 
-        if (!context.Auth) return null;
-
+        if (!context.authorization) return null;
+        const AUTH_ID: string = context.authorization.ID;
         const result = await this.projectUseCases.Update({ 
-            ID: <string> args.input.ID,
-            name: <string> args.input.name,
-            CURRENT_EDITOR: <string> context.Auth.ID
-         });
+            ID: <string> input.ID,
+            name: <string> input.name,
+            CURRENT_EDITOR: AUTH_ID
+        });
          
         return result;
     }
 
-    public async Delete(_: any, args: any, context: any): Promise<string | null> {
+    public async Delete(_: any, args: any, context: any): Promise<{ID: string} | null> {
 
-        if (!context.Auth) return null;
+        if (!context.authorization) return null;
         
         const result = await this.projectUseCases.Delete({ 
             ID: <string> args.ID,
-            CURRENT_EDITOR: <string> context.Auth.ID
-         });
+            CURRENT_EDITOR: <string> context.authorization.ID
+        });
          
         return result;
     }

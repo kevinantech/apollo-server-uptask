@@ -1,17 +1,8 @@
 const TypeDefs = `
-
-    type Project {
-        ID: ID!
-        name: String!
-        created: String!
-    }
     
-    input ProjectInput {
-        ID: ID!
-        name: String!
-    }
+    # INPUTS
 
-    input UserInput {
+    input CreateUserInput {
         name: String!
         email: String!
         password: String!
@@ -21,29 +12,65 @@ const TypeDefs = `
         email: String!
         password: String!
     }
-    
-    type ID_Answer {
-        ID: ID!
-    }
 
-    type Token {
-        token: String!
-    }
-
-    type ProjectUpdated {
+    input CreateProjectInput {
         name: String!
     }
 
+    input UpdateProjectInput {
+        ID: ID!
+        name: String!
+    }
+
+    input CreateTaskInput {
+        name: String!
+        PROJECT_ID: ID!
+    }
+    
+    
+    # RESPONSE TYPES
+
+    type Response {
+        ID: ID
+    }
+
+    type Token {
+        token: String
+    }
+
+    type Project {
+        ID: ID
+        name: String
+    }
+
+    type Task {
+        ID: ID
+        name: String
+        status: Boolean
+        PROJECT_ID: ID
+    }
+
+
+    # RESOLVERS
+    
     type Query {
-        AuthUser(input: AuthUserInput): Token
         GetProjects: [Project]
     }
 
     type Mutation {
-        CreateUser(input: UserInput!): ID_Answer
-        CreateProject(name: String!): ID_Answer
-        UpdateProject(input: ProjectInput!): ProjectUpdated
-        DeleteProject(ID: ID!): String
+
+        # USER
+        CreateUser(input: CreateUserInput!): Response
+        AuthUser(input: AuthUserInput!): Token
+
+        # PROJECT
+        CreateProject(input: CreateProjectInput!): Project
+        UpdateProject(input: UpdateProjectInput!): Project
+        DeleteProject(ID: ID!): Response 
+
+        # TASK
+        CreateTask(input: CreateTaskInput): Task
+
     }
 `;
 export {TypeDefs};

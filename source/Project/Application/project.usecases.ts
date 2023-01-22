@@ -10,18 +10,18 @@ export class UCProject {
         return result;
     }
 
-    public async Create({ name, AUTHOR_ID }: { name: string, AUTHOR_ID: string}): Promise<{ID: string} | null> {
+    public async Create({ name, AUTHOR_ID }: { name: string, AUTHOR_ID: string}): Promise<{ID: string, name: string} | null> {
         const projetvalue = new Project({ name, AUTHOR_ID });
         const result = await this.projectRepository.Create(projetvalue);
         return result;
     }
 
-    public async Update({ ID, name, CURRENT_EDITOR }: {ID: string, name: string, CURRENT_EDITOR: string}): Promise<{name:string} | null>{
+    public async Update({ ID, name, CURRENT_EDITOR }: {ID: string, name: string, CURRENT_EDITOR: string}): Promise<{ID: string, name: string} | null> {
         const result = await this.projectRepository.Update({ ID, name, CURRENT_EDITOR });
         return result;
     }
 
-    public async Delete({ ID, CURRENT_EDITOR }: {ID: string, CURRENT_EDITOR: string}): Promise<string | null>{
+    public async Delete({ ID, CURRENT_EDITOR }: {ID: string, CURRENT_EDITOR: string}): Promise<{ID: string} | null> {
         const result = this.projectRepository.Delete({ ID, CURRENT_EDITOR});
         return result;
     }

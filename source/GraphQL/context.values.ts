@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
-const auth = (token: string | undefined) => {
+const AuthToken = (token: string | undefined) => {
   if (token) {
     try {
       const userPayload = jwt.verify(token, <string> process.env.SECRET);
@@ -10,4 +10,4 @@ const auth = (token: string | undefined) => {
   }
   return null;
 }
-export {auth};
+export {AuthToken};

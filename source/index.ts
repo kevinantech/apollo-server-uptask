@@ -1,9 +1,9 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { Resolvers } from "./GraphQL/Resolvers";
-import { TypeDefs } from "./GraphQL/TypeDefs";
+import { Resolvers } from "./GraphQL/resolvers";
+import { TypeDefs } from "./GraphQL/typeDefs";
 import { dbConnect } from "../config";
-import { auth } from "./GraphQL/context.values";
+import { AuthToken } from "./GraphQL/context.values";
 
 const Bootstrap = async () => {
 
@@ -16,7 +16,7 @@ const Bootstrap = async () => {
     const { url } = await startStandaloneServer(Server, {
         listen: { port: 4000 },
         context: async ({req}) => ({
-            Auth: auth(req.headers.authorization)
+            authorization: AuthToken(req.headers.authorization)
         })
     })
     console.log(`🚀  Server ready at: ${url}`);

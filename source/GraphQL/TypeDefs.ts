@@ -20,7 +20,7 @@ const TypeDefs = `
     }
     
     type Token {
-        token: String
+        token: String!
     }
     
     # PROJECT
@@ -50,11 +50,10 @@ const TypeDefs = `
         ID: ID!
         name: String
         status: Boolean!
-        project_id: ID
     }
     
     type Task {
-        ID: ID
+        ID: ID!
         name: String
         status: Boolean
         project_id: ID
@@ -83,8 +82,8 @@ const TypeDefs = `
         DeleteProject(ID: ID!): Response 
 
         # TASK
-        CreateTask(input: CreateTaskInput): Task
-        UpdateTask(input: UpdateTaskInput): Task
+        CreateTask(input: CreateTaskInput!): Task
+        UpdateTask(input: UpdateTaskInput!): Task
 
     }
 `;

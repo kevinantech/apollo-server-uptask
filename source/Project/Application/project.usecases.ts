@@ -5,28 +5,46 @@ import Project from "../Domain/project.value";
 export class UCProject {
     constructor(private readonly projectRepository: ProjectRepository){}
 
-    public async GetAll(author_id: string): Promise<IProject[]> {
-        const projects = await this.projectRepository.GetAll(author_id);
+    public async GetProjects(author_id: string): Promise<IProject[]> {
+        const projects = await this.projectRepository.getProjects(author_id);
         return projects;
     }
 
     public async Create(nameArg: string, authorArg: string): Promise<{ ID: string; name: string }> {
         const project = new Project(nameArg, authorArg);
-        const savedProject = await this.projectRepository.Create(project);
+        const savedProject = await this.projectRepository.saveProject(project);
+        if(!savedProject) throw new Error('Could not save');
         const { ID, name } = savedProject;
         return { ID, name };
     }
 
-    public async Update(idArg: string, nameArg: string, editorArg: string): Promise<{ ID: string; name: string; } | null> {
-        const updatedProject = await this.projectRepository.Update(idArg, nameArg, editorArg);
-        if(!updatedProject) return null;
+    public async Update(idArg: string, nameArg: string, editorArg: string): Promise<{ ID: string; name: string; }> {
+
+        // Verify that the project exists.
+        const projectFound = await this.projectRepository.findProjectById(idArg);
+        if(!projectFound) throw new Error('The project does not exist');
+
+        // Verify that editor matches with the project autor.
+        if(editorArg != projectFound.author_id) throw new Error("You dont have permissions");
+
+        // Core
+        const updatedProject = await this.projectRepository.updateProject(idArg, nameArg);
+        if(!updatedProject) throw new Error('Could not update');
         const { ID, name } = updatedProject;
         return { ID, name };
     }
 
-    public async Delete(idArg: string, editorArg: string): Promise<{ID: string} | null> {
-        const deletedProject = await this.projectRepository.Delete(idArg, editorArg);
-        if(!deletedProject) return null;
+    public async Delete(idArg: string, editorArg: string): Promise<{ ID: string }> {
+
+        // Verify that the project exists.
+        const projectFound = await this.projectRepository.findProjectById(idArg);
+        if(!projectFound) throw new Error('The project does not exist');
+
+        // Verify that editor matches with the project autor.
+        if(editorArg != projectFound.author_id) throw new Error("You dont have permissions");
+
+        const deletedProject = await this.projectRepository.deleteProject(idArg);
+        if(!deletedProject) throw new Error('Could not delete');
         const { ID } = deletedProject;
         return { ID };
     }

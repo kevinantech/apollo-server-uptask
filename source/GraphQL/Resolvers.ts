@@ -1,20 +1,12 @@
 import { UserDatabaseRepository } from "../user/Infrastructure/user.database";
 import { ProjectDatabaseRepository } from "../project/Infrastructure/project.database";
 import { TaskDatabaseRepository } from "../task/Infrastructure/task.database";
-import { SharedDatabaseRepository } from "../shared/Infrastructure/shared.database";
 import { UCUser } from "../user/Application/user.usecases";
 import { UCProject } from "../project/Application/project.usecases";
 import { UCTask } from "../task/Application/task.usecases";
-import { UCShared } from "../shared/Application/shared.usecases";
 import { UserResolver } from "../user/Infrastructure/user.resolver";
 import { ProjectResolver } from "../project/Infrastructure/project.resolver";
 import { TaskResolver } from "../task/Infrastructure/task.resolver";
-
-
-// Shared repository
-const sharedRepo = new SharedDatabaseRepository();
-const sharedUseCases = new UCShared(sharedRepo);
-
 
 // User's dependency injection 
 const userRepo = new UserDatabaseRepository();
@@ -28,9 +20,8 @@ const projectResolver = new ProjectResolver(projectUseCases);
 
 // Task's dependency injection
 const taskRepo = new TaskDatabaseRepository();
-const taskUseCases = new UCTask(taskRepo);
-const taskResolver = new TaskResolver(taskUseCases, sharedUseCases);
-
+const taskUseCases = new UCTask(taskRepo, projectRepo);
+const taskResolver = new TaskResolver(taskUseCases);
 
 const Resolvers = {
     Query: {

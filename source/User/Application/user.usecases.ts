@@ -12,19 +12,30 @@ export class UCUser {
         const salt = await bcrypt.genSalt(10);
         password = await bcrypt.hash(password, salt);
 
+        // Checks that the user's email does not exist..
+        const userFound = await this.userRepository.findUserByEmail(email);
+        if(userFound) throw new Error('The email is already registered');
+
+        // Saves the user
         const user = new User(name, email, password);
-        const result = await this.userRepository.Create(user);
-        return result;
+        const response = await this.userRepository.saveUser(user);
+        if(!response) throw new Error('Could not save');
+        return response; 
     }
+
 
     public async Auth(email: string, password: string): Promise<{ token: string }> {
 
-        // User's auth
-        const result = await this.userRepository.Auth(email, password);
-        if(!result) throw new Error('Could not authenticate');
-    
+        // Checks that the user's email exists.
+        const userFound = await this.userRepository.findUserByEmail(email);
+        if(!userFound) throw new Error('Incorrect email');
+
+        // Verifying that the user's password match 
+        const isCorrectPassword = await bcrypt.compare(password, userFound.password);
+        if(!isCorrectPassword) throw new Error('Incorrect password');
+
         // Gen token
-        const { ID } = result;
+        const { ID } = userFound;
         const token = genToken({ ID, email }, <string> process.env.SECRET, '2h');
         return { token };
     }

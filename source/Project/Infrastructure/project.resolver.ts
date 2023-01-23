@@ -11,7 +11,7 @@ export class ProjectResolver {
     public async GetAll(_: any, __: any, context: any) {
         if(!context.authorization) throw new Error('Authorization denied');
         const author_id: string = context.authorization.ID;
-        const data = await this.projectUseCases.GetAll(author_id);
+        const data = await this.projectUseCases.GetProjects(author_id);
         return data;
     }
     

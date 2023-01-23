@@ -3,47 +3,47 @@ import { UCTask } from "../Application/task.usecases";
 
 export class TaskResolver {
 
-    constructor(private taskUseCases: UCTask, private sharedUseCases: UCShared){
+    constructor(private taskUseCases: UCTask, private sharedUseCases: UCShared) {
         this.Create = this.Create.bind(this);
         this.Update = this.Update.bind(this)
     }
 
-    public async Create(_: any, { input }: any, context: any){
+    public async Create(_: any, { input }: any, context: any) {
 
         if(!context.authorization) throw new Error('Authorization denied');
 
-        const data = {
+        const body = {
             name: input.name,
-            project_ID: input.project_ID,
-            author_ID: context.authorization.ID
+            project_id: input.project_id,
+            author_id: context.authorization.ID
         }
 
-        // Check that project exists
-        await this.sharedUseCases.Exists({ ID: data.project_ID }, { Project: true });
+        // Checks that the project exists. If not found, throw exception
+        await this.sharedUseCases.Exists({ ID: body.project_id }, { Project: true });
 
-        const result = await this.taskUseCases.Create(data.name, data.project_ID, data.author_ID);
-        return result;
+        const data = await this.taskUseCases.Create(body.name, body.project_id, body.author_id);
+        return data;
     }
 
-    public async Update(_: any, { input }: any, context: any){
+    public async Update(_: any, { input }: any, context: any) {
 
         if(!context.authorization) throw new Error('Authorization denied');
 
-        const data = {
+        const body = {
             ID: input.ID,
             name: input.name,
             status: input.status,
-            project_ID: input.project_ID,
-            author_ID: context.authorization.ID
+            project_id: input.project_id,
+            author_id: context.authorization.ID
         }
 
-        // Checks if user wants move the task to other project.
-        if(data.project_ID){
-            // Checks that project exists, if not found, throw exception
-            await this.sharedUseCases.Exists({ ID: data.project_ID }, { Project: true });
+        // Checks if the user wants move the task to other project.
+        if(body.project_id){
+            // Checks that the project exists. If not found, throw exception
+            await this.sharedUseCases.Exists({ ID: body.project_id }, { Project: true });
         }
 
-        const result = await this.taskUseCases.Update(data.ID, data.author_ID, data.name, data.status, data.project_ID);
-        return result;
+        const data = await this.taskUseCases.Update(body.ID, body.author_id, body.name, body.status, body.project_id);
+        return data;
     }
 }

@@ -18,16 +18,15 @@ const ProjectSchema = new Schema<IProject>(
             required: true
         }
         ,
-        AUTHOR_ID: {
+        author_id: {
             type: String,
             required: true,
             ref: 'User'
         }
     },
     {
-        timestamps: false,
         versionKey: false
     }
 );
 const ProjectModel = model('Projects', ProjectSchema);
-export {ProjectModel};
+export { ProjectModel };

@@ -6,14 +6,14 @@ export class Task implements ITask {
     name: string;
     status: boolean;
     created: Date;
-    project_ID: string;
-    author_ID: string
-    constructor(name:string, project_ID:string, author_ID:string){
+    project_id: string;
+    author_id: string
+    constructor(name:string, project_id:string, author_id:string){
         this.ID = uuid();
         this.name = name;
         this.status = false;
         this.created = new Date();
-        this.project_ID = project_ID;
-        this.author_ID = author_ID;
+        this.project_id = project_id;
+        this.author_id = author_id;
     }
 }

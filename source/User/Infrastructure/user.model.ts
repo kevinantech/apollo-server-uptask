@@ -22,12 +22,15 @@ const UserSchema = new Schema<IUser>(
             type: String,
             require: true,
             trim: true
+        },
+        registration: {
+            type: Date,
+            requiere: true
         }
     },
     {   
-        timestamps: false,
         versionKey: false
     }
 )
 const UserModel = model('Users', UserSchema);
-export {UserModel};
+export { UserModel };

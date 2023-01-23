@@ -8,6 +8,6 @@ const AuthToken = (token: string | undefined) => {
       return userPayload;
     } catch (e) {}
   }
-  return null;
+  return;
 }
 export {AuthToken};

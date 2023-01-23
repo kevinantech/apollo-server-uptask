@@ -5,24 +5,29 @@ import Project from "../Domain/project.value";
 export class UCProject {
     constructor(private readonly projectRepository: ProjectRepository){}
 
-    public async GetAll(AUTHOR_ID: string): Promise<IProject[] | null> {
-        const result = await this.projectRepository.GetAll(AUTHOR_ID);
-        return result;
+    public async GetAll(author_id: string): Promise<IProject[]> {
+        const projects = await this.projectRepository.GetAll(author_id);
+        return projects;
     }
 
-    public async Create({ name, AUTHOR_ID }: { name: string, AUTHOR_ID: string}): Promise<{ID: string, name: string} | null> {
-        const projetvalue = new Project({ name, AUTHOR_ID });
-        const result = await this.projectRepository.Create(projetvalue);
-        return result;
+    public async Create(nameArg: string, authorArg: string): Promise<{ ID: string; name: string }> {
+        const project = new Project(nameArg, authorArg);
+        const savedProject = await this.projectRepository.Create(project);
+        const { ID, name } = savedProject;
+        return { ID, name };
     }
 
-    public async Update({ ID, name, CURRENT_EDITOR }: {ID: string, name: string, CURRENT_EDITOR: string}): Promise<{ID: string, name: string} | null> {
-        const result = await this.projectRepository.Update({ ID, name, CURRENT_EDITOR });
-        return result;
+    public async Update(idArg: string, nameArg: string, editorArg: string): Promise<{ ID: string; name: string; } | null> {
+        const updatedProject = await this.projectRepository.Update(idArg, nameArg, editorArg);
+        if(!updatedProject) return null;
+        const { ID, name } = updatedProject;
+        return { ID, name };
     }
 
-    public async Delete({ ID, CURRENT_EDITOR }: {ID: string, CURRENT_EDITOR: string}): Promise<{ID: string} | null> {
-        const result = this.projectRepository.Delete({ ID, CURRENT_EDITOR});
-        return result;
+    public async Delete(idArg: string, editorArg: string): Promise<{ID: string} | null> {
+        const deletedProject = await this.projectRepository.Delete(idArg, editorArg);
+        if(!deletedProject) return null;
+        const { ID } = deletedProject;
+        return { ID };
     }
 }

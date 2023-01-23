@@ -4,32 +4,30 @@ import { Task } from "../Domain/task.value";
 export class UCTask {
     constructor(private readonly taskRepository: TaskRepository){}
 
-    public async Create(nameInput: string, projectInput: string, authorInput: string): 
+    public async Create(nameArg: string, projectArg: string, authorArg: string): 
         Promise<{ 
             ID: string, 
             name: string, 
             status: boolean, 
-            project_ID: string
-        } | null> {
-
-        const task = new Task(nameInput, projectInput, authorInput);
+            project_id: string
+        }> {
+        const task = new Task(nameArg, projectArg, authorArg);
         const taskCreated = await this.taskRepository.Create(task);
-        if(!taskCreated) return null;
-        const { ID, name, status, project_ID } = taskCreated;
-        return { ID, name, status, project_ID };
+        const { ID, name, status, project_id } = taskCreated;
+        return { ID, name, status, project_id };
     }
 
-    public async Update(ID_Input: string, authorInput: string, nameInput?: string, statusInput?: boolean, projectInput?: string): 
+    public async Update(idArg: string, authorArg: string, nameArg?: string, statusArg?: boolean, projectArg?: string): 
         Promise<{ 
             ID: string, 
             name: string, 
             status: boolean, 
-            project_ID: string
+            project_id: string
         } | null> {
-
-        const taskUpdated = await this.taskRepository.Update(ID_Input, authorInput, nameInput, statusInput, projectInput);
+            
+        const taskUpdated = await this.taskRepository.Update(idArg, authorArg, nameArg, statusArg, projectArg);
         if(!taskUpdated) return null;
-        const { ID, name, status, project_ID } = taskUpdated;
-        return { ID, name, status, project_ID };
+        const { ID, name, status, project_id } = taskUpdated;
+        return { ID, name, status, project_id };
     }
 }

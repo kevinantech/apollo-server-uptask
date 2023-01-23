@@ -6,10 +6,12 @@ export class User implements IUser {
     name: string;
     email: string;
     password: string;
-    constructor({ name, email, password }: {name: string, email:string, password: string}){
+    registration: Date;
+    constructor( name: string, email: string, password: string){
         this.ID = uuid();
         this.name = name;
         this.email = email;
         this.password = password;
+        this.registration = new Date();
     }
 }

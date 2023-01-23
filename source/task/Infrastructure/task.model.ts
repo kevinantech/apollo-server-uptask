@@ -21,11 +21,11 @@ const TaskSchema = new Schema<ITask>(
             type: Date,
             required: true
         },
-        project_ID: {
+        project_id: {
             type: String,
             required: true
         },
-        author_ID: {
+        author_id: {
             type: String,
             required: true
         }
@@ -36,4 +36,4 @@ const TaskSchema = new Schema<ITask>(
 );
 
 const TaskModel = model('Tasks', TaskSchema);
-export {TaskModel};
+export { TaskModel };

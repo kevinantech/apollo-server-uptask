@@ -1,6 +1,6 @@
 import { SharedRepository } from "../Domain/shared.repository";
 
-export enum AVAILABLE_MODELS {
+enum AVAILABLE_MODELS {
     Project = 'Project'
 }
 

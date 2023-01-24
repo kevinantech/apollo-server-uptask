@@ -41,6 +41,10 @@ const TypeDefs = `
 
     # TASK
     
+    input GetTasksInput {
+        project_id: ID!
+    }
+
     input CreateTaskInput {
         name: String!
         project_id: ID!
@@ -67,23 +71,24 @@ const TypeDefs = `
         GetProjects: [Project]
 
         # TASK
-        
+        GetTasks(input: GetTasksInput): [Task]
     }
 
     type Mutation {
 
         # USER
-        CreateUser(input: CreateUserInput!): Response
-        AuthUser(input: AuthUserInput!): Token
+        CreateUser(input: CreateUserInput): Response
+        AuthUser(input: AuthUserInput): Token
 
         # PROJECT
-        CreateProject(input: CreateProjectInput!): Project
-        UpdateProject(input: UpdateProjectInput!): Project
+        CreateProject(input: CreateProjectInput): Project
+        UpdateProject(input: UpdateProjectInput): Project
         DeleteProject(ID: ID!): Response 
 
         # TASK
-        CreateTask(input: CreateTaskInput!): Task
-        UpdateTask(input: UpdateTaskInput!): Task
+        CreateTask(input: CreateTaskInput): Task
+        UpdateTask(input: UpdateTaskInput): Task
+        DeleteTask(ID: ID!): Response
 
     }
 `;

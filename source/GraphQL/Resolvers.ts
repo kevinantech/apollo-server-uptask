@@ -8,24 +8,29 @@ import { UserResolver } from "../user/Infrastructure/user.resolver";
 import { ProjectResolver } from "../project/Infrastructure/project.resolver";
 import { TaskResolver } from "../task/Infrastructure/task.resolver";
 
-// User's dependency injection 
+// Repos 
 const userRepo = new UserDatabaseRepository();
-const userUseCases = new UCUser(userRepo);
-const userResolver = new UserResolver(userUseCases);
-
-// Project's dependency injection
 const projectRepo = new ProjectDatabaseRepository();
-const projectUseCases = new UCProject(projectRepo);
-const projectResolver = new ProjectResolver(projectUseCases);
-
-// Task's dependency injection
 const taskRepo = new TaskDatabaseRepository();
+
+// Use cases 
+const userUseCases = new UCUser(userRepo);
+const projectUseCases = new UCProject(projectRepo, taskRepo);
 const taskUseCases = new UCTask(taskRepo, projectRepo);
-const taskResolver = new TaskResolver(taskUseCases);
+
+// Resolvers
+const userResolver = new UserResolver(userUseCases);
+const projectResolver = new ProjectResolver(projectUseCases);
+const taskResolver = new TaskResolver(taskUseCases); 
 
 const Resolvers = {
     Query: {
-        GetProjects: projectResolver.GetAll
+
+        // PROJECT
+        GetProjects: projectResolver.GetProjects,
+
+        // TASK
+        GetTasks: taskResolver.GetTasks
     },
     Mutation: {
 
@@ -40,7 +45,8 @@ const Resolvers = {
 
         // TASK 
         CreateTask: taskResolver.Create,
-        UpdateTask: taskResolver.Update
+        UpdateTask: taskResolver.Update,
+        DeleteTask: taskResolver.Delete
     }
 }
 

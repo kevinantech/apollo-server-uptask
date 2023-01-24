@@ -9,7 +9,7 @@ export class ProjectDatabaseRepository implements ProjectRepository {
         return project;
     }
 
-    async getProjects(author_id: string): Promise<IProject[]> {   
+    async findProjectsByAuthorId(author_id: string): Promise<IProject[]> {   
         const projects = await ProjectModel.find({ author_id });
         return projects;
     }

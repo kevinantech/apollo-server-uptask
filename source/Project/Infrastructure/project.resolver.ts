@@ -2,13 +2,13 @@ import { UCProject } from "../Application/project.usecases";
 
 export class ProjectResolver {
     constructor(private projectUseCases: UCProject) {
-        this.GetAll = this.GetAll.bind(this);
+        this.GetProjects = this.GetProjects.bind(this);
         this.Create = this.Create.bind(this);
         this.Update = this.Update.bind(this);
         this.Delete = this.Delete.bind(this);
     }
 
-    public async GetAll(_: any, __: any, context: any) {
+    public async GetProjects(_: any, __: any, context: any) {
         if(!context.authorization) throw new Error('Authorization denied');
         const author_id: string = context.authorization.ID;
         const data = await this.projectUseCases.GetProjects(author_id);

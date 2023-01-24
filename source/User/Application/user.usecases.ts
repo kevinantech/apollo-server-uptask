@@ -18,7 +18,7 @@ export class UCUser {
 
         // Saves the user
         const user = new User(name, email, password);
-        const response = await this.userRepository.saveUser(user);
+        const response = await this.userRepository.registerUser(user);
         if(!response) throw new Error('Could not save');
         return response; 
     }

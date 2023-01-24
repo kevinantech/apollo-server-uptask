@@ -19,7 +19,7 @@ export class TaskDatabaseRepository implements TaskRepository {
             const taskModel = new TaskModel(task);
             const savedTask = await taskModel.save();
             return savedTask;
-        } catch (e) { console.error({ at: `${__dirname} => Create`, error: e }) } 
+        } catch (e) { console.error({ at: `${__dirname} => registerTask`, error: e }) } 
     }
 
     async updateTask(ID: string, name?: string, status?: boolean): Promise<ITask | null> {

@@ -20,7 +20,7 @@ export class ProjectResolver {
         const body = {
             name: input.name,
             author_id: context.authorization.ID
-        };
+        }
         const data = await this.projectUseCases.Create(body.name, body.author_id);
         return data;
     }
@@ -41,8 +41,8 @@ export class ProjectResolver {
         const body = {
             ID,
             editor_id: context.authorization.ID
-        };
-        const data = await this.projectUseCases.Delete(body.ID, body.editor_id)
+        }
+        const data = await this.projectUseCases.Delete(body.ID, body.editor_id);
         return data;
     }
 }

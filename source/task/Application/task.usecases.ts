@@ -1,5 +1,5 @@
 import { ProjectRepository } from "../../project/Domain/project.repository";
-import { TaskRepository } from "../Domain/task.repository"
+import { TaskRepository } from "../Domain/task.repository";
 import { Task } from "../Domain/task.value";
 
 export class UCTask {
@@ -18,7 +18,7 @@ export class UCTask {
         if(!projectFound) throw new Error('The project does not exist');
 
         // Checks that the user matches with the author of the project.
-        if(userArg != projectFound.author_id) throw new Error('You dont have permissions') 
+        if(userArg != projectFound.author_id) throw new Error('You dont have permissions');
 
         const tasks = await this.taskRepository.findTasksByProjectId(projectArg);
         return tasks;
@@ -34,14 +34,14 @@ export class UCTask {
 
         // Checks that the project exists.
         const projectFound = await this.projectRepository.findProjectById(projectArg);
-        if(!projectFound) throw new Error('The project does not exist')
+        if(!projectFound) throw new Error('The project does not exist');
 
         // Checks that the creador of the task matches with the author of the project.
-        if(authorArg != projectFound.author_id) throw new Error('You dont have permissions') 
+        if(authorArg != projectFound.author_id) throw new Error('You dont have permissions');
 
         const task = new Task(nameArg, projectArg, authorArg);
         const taskCreated = await this.taskRepository.registerTask(task);
-        if(!taskCreated) throw new Error('Could not save')
+        if(!taskCreated) throw new Error('Could not save');
         const { ID, name, status, project_id } = taskCreated;
         return { ID, name, status, project_id };
     }

@@ -1,13 +1,13 @@
-import jwt from 'jsonwebtoken';
-import 'dotenv/config';
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 const AuthToken = (token: string | undefined) => {
   if (token) {
     try {
-      const userPayload = jwt.verify(token, <string> process.env.SECRET);
-      return userPayload;
+      const userPayload = jwt.verify(token, <string> process.env.SECRET)
+      return userPayload
     } catch (e) {}
   }
   return;
 }
-export {AuthToken};
+export { AuthToken }

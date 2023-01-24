@@ -1,9 +1,9 @@
-import { IProject } from "./project.entity"
+import { IProject } from "./project.entity";
 
 export interface ProjectRepository {
     findProjectById(ID: string): Promise<IProject | null>
     findProjectsByAuthorId(author_id: string): Promise<IProject[]>
-    saveProject(Project: IProject): Promise<IProject | void>
+    registerProject(Project: IProject): Promise<IProject | void>
     updateProject(ID: string, name: string): Promise<IProject | null>
     deleteProject(ID: string): Promise<IProject | null>
 }

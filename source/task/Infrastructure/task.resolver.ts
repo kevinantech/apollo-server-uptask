@@ -16,7 +16,7 @@ export class TaskResolver {
             user_id: context.authorization.ID
         }
         const data = this.taskUseCases.GetTasks(body.project_id, body.user_id);
-        return data
+        return data;
     }
 
     public async Create(_: any, { input }: any, context: any) {

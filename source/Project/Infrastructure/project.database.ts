@@ -14,16 +14,16 @@ export class ProjectDatabaseRepository implements ProjectRepository {
         return projects;
     }
 
-    async saveProject(project: IProject): Promise<IProject | void> {
+    async registerProject(project: IProject): Promise<IProject | void> {
         try {
             const projectModel = new ProjectModel(project);
             const savedProject = await projectModel.save();
             return savedProject;
-        } catch(e) { console.error({ at: `${__dirname} => saveProject`, message: e }) }
+        } catch(e) { console.error({ at: `${__dirname} => registerProject`, message: e }) }
     }
 
     async updateProject(ID: string, name: string): Promise<IProject | null> {
-        const updatedProject = await ProjectModel.findOneAndUpdate({ ID }, { name }, { new: true});
+        const updatedProject = await ProjectModel.findOneAndUpdate({ ID }, { name }, { new: true });
         return updatedProject;
     }
 

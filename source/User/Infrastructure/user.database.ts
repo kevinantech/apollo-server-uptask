@@ -9,11 +9,11 @@ export class UserDatabaseRepository implements UserRepository {
         return userFound;
     }
 
-    async saveUser(user: IUser): Promise<{ ID: string } | void> {
+    async registerUser(user: IUser): Promise<{ ID: string } | void> {
         try {
             const userModel = new UserModel(user);
             const { ID } = await userModel.save();
             return { ID };
-        } catch(e) { console.error({ at: `${__dirname}, => saveUser`, error: e }) }
+        } catch(e) { console.error({ at: `${__dirname}, => registerUser`, error: e }) }
     }
 }

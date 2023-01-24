@@ -13,7 +13,7 @@ export class UCProject {
 
     public async Create(nameArg: string, authorArg: string): Promise<{ ID: string; name: string; }> {
         const project = new Project(nameArg, authorArg);
-        const savedProject = await this.projectRepository.saveProject(project);
+        const savedProject = await this.projectRepository.registerProject(project);
         if(!savedProject) throw new Error('Could not save');
         const { ID, name } = savedProject;
         return { ID, name };

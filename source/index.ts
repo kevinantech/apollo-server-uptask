@@ -6,14 +6,14 @@ import { AuthToken } from './GraphQL/context.values';
 import { connectDatabase } from '../config';
 
 const bootstrap = async () => {
-    connectDatabase();
-    const server = new ApolloServer({ typeDefs, resolvers });
-    const { url } = await startStandaloneServer(server, {
-        listen: { port: 4000 },
-        context: async ({ req }) => ({
-            authorization: AuthToken(req.headers.authorization),
-        })
-    });
-    console.log(`🚀  Server ready at: ${url}`);
+	connectDatabase();
+	const server = new ApolloServer({ typeDefs, resolvers });
+	const { url } = await startStandaloneServer(server, {
+		listen: { port: 4000 },
+		context: async ({ req }) => ({
+			authorization: AuthToken(req.headers.authorization),
+		})
+	});
+	console.log(`🚀  Server ready at: ${url}`);
 };
 bootstrap();

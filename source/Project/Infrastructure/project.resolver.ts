@@ -1,4 +1,4 @@
-import { UCProject } from "../Application/project.usecases";
+import { UCProject } from '../Application/project.usecases';
 
 export class ProjectResolver {
     constructor(private projectUseCases: UCProject) {
@@ -10,8 +10,8 @@ export class ProjectResolver {
 
     public async GetProjects(_: any, __: any, context: any) {
         if(!context.authorization) throw new Error('Authorization denied');
-        const author_id: string = context.authorization.ID;
-        const data = await this.projectUseCases.GetProjects(author_id);
+        const authorId: string = context.authorization.ID;
+        const data = await this.projectUseCases.GetProjects(authorId);
         return data;
     }
     
@@ -19,9 +19,9 @@ export class ProjectResolver {
         if(!context.authorization) throw new Error('Authorization denied');
         const body = {
             name: input.name,
-            author_id: context.authorization.ID
-        }
-        const data = await this.projectUseCases.Create(body.name, body.author_id);
+            authorId: context.authorization.ID
+        };
+        const data = await this.projectUseCases.Create(body.name, body.authorId);
         return data;
     }
 
@@ -30,9 +30,9 @@ export class ProjectResolver {
         const body = {
             ID: input.ID,
             name: input.name,
-            editor_id: context.authorization.ID
-        }
-        const data = await this.projectUseCases.Update(body.ID, body.name, body.editor_id);
+            editorId: context.authorization.ID
+        };
+        const data = await this.projectUseCases.Update(body.ID, body.name, body.editorId);
         return data;
     }
 
@@ -40,9 +40,9 @@ export class ProjectResolver {
         if(!context.authorization) throw new Error('Authorization denied');
         const body = {
             ID,
-            editor_id: context.authorization.ID
-        }
-        const data = await this.projectUseCases.Delete(body.ID, body.editor_id);
+            editorId: context.authorization.ID
+        };
+        const data = await this.projectUseCases.Delete(body.ID, body.editorId);
         return data;
     }
 }

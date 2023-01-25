@@ -1,11 +1,11 @@
-import { ITask } from "../Domain/task.entity";
-import { TaskRepository } from "../Domain/task.repository";
-import { TaskModel } from "./task.model";
+import { ITask } from '../Domain/task.entity';
+import { TaskRepository } from '../Domain/task.repository';
+import { TaskModel } from './task.model';
 
 export class TaskDatabaseRepository implements TaskRepository {
 
-    async findTasksByProjectId(project_id: string): Promise<ITask[]> {
-        const tasks = await TaskModel.find({ project_id }, { _id: 0, created: 0, author_id: 0 }); 
+    async findTasksByProjectId(projectId: string): Promise<ITask[]> {
+        const tasks = await TaskModel.find({ projectId }, { _id: 0, created: 0, authorId: 0 }); 
         return tasks;
     }
     
@@ -19,7 +19,7 @@ export class TaskDatabaseRepository implements TaskRepository {
             const taskModel = new TaskModel(task);
             const savedTask = await taskModel.save();
             return savedTask;
-        } catch (e) { console.error({ at: `${__dirname} => registerTask`, error: e }) } 
+        } catch (e) { console.error({ at: `${__dirname} => registerTask`, error: e }); } 
     }
 
     async updateTask(ID: string, name?: string, status?: boolean): Promise<ITask | null> {
@@ -32,8 +32,8 @@ export class TaskDatabaseRepository implements TaskRepository {
         return deletedTask;   
     }
 
-    async deleteTasksByProjectId(project_id: string): Promise<any> {
-        const deletedTasks = await TaskModel.deleteMany({ project_id });
+    async deleteTasksByProjectId(projectId: string): Promise<any> {
+        const deletedTasks = await TaskModel.deleteMany({ projectId });
         return deletedTasks;
     }
 }

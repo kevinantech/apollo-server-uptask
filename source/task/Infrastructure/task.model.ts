@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { ITask } from "../Domain/task.entity";
+import { Schema, model } from 'mongoose';
+import { ITask } from '../Domain/task.entity';
 
 const TaskSchema = new Schema<ITask>(
     {
@@ -21,11 +21,11 @@ const TaskSchema = new Schema<ITask>(
             type: Date,
             required: true
         },
-        project_id: {
+        projectId: {
             type: String,
             required: true
         },
-        author_id: {
+        authorId: {
             type: String,
             required: true
         }

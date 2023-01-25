@@ -1,4 +1,4 @@
-import { UCTask } from "../Application/task.usecases";
+import { UCTask } from '../Application/task.usecases';
 
 export class TaskResolver {
 
@@ -12,10 +12,10 @@ export class TaskResolver {
     public async GetTasks(_: any, { input }: any, context: any) {
         if(!context.authorization) throw new Error('Authorization denied');
         const body = {
-            project_id: input.project_id,
-            user_id: context.authorization.ID
-        }
-        const data = this.taskUseCases.GetTasks(body.project_id, body.user_id);
+            projectId: input.projectId,
+            userId: context.authorization.ID
+        };
+        const data = this.taskUseCases.GetTasks(body.projectId, body.userId);
         return data;
     }
 
@@ -23,10 +23,10 @@ export class TaskResolver {
         if(!context.authorization) throw new Error('Authorization denied');
         const body = {
             name: input.name,
-            project_id: input.project_id,
-            author_id: context.authorization.ID
-        }
-        const data = await this.taskUseCases.Create(body.name, body.project_id, body.author_id);
+            projectId: input.projectId,
+            authorId: context.authorization.ID
+        };
+        const data = await this.taskUseCases.Create(body.name, body.projectId, body.authorId);
         return data;
     }
 
@@ -36,9 +36,9 @@ export class TaskResolver {
             ID: input.ID,
             name: input.name,
             status: input.status,
-            editor_id: context.authorization.ID
-        }
-        const data = await this.taskUseCases.Update(body.ID, body.editor_id, body.name, body.status);
+            editorId: context.authorization.ID
+        };
+        const data = await this.taskUseCases.Update(body.ID, body.editorId, body.name, body.status);
         return data;
     }
 
@@ -46,9 +46,9 @@ export class TaskResolver {
         if(!context.authorization) throw new Error('Authorization denied');
         const body = {
             ID: ID,
-            editor_id: context.authorization.ID
-        }
-        const data = await this.taskUseCases.Delete(body.ID, body.editor_id);
+            editorId: context.authorization.ID
+        };
+        const data = await this.taskUseCases.Delete(body.ID, body.editorId);
         return data;
     }
 }

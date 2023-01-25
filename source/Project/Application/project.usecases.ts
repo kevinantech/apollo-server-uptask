@@ -1,13 +1,13 @@
-import { IProject } from "../Domain/project.entity";
-import { ProjectRepository } from "../Domain/project.repository";
-import Project from "../Domain/project.value";
-import { TaskRepository } from "../../task/Domain/task.repository";
+import { IProject } from '../Domain/project.entity';
+import { ProjectRepository } from '../Domain/project.repository';
+import Project from '../Domain/project.value';
+import { TaskRepository } from '../../task/Domain/task.repository';
 
 export class UCProject {
     constructor(private readonly projectRepository: ProjectRepository, private readonly taskRepository: TaskRepository){}
 
-    public async GetProjects(author_id: string): Promise<IProject[]> {
-        const projects = await this.projectRepository.findProjectsByAuthorId(author_id);
+    public async GetProjects(authorId: string): Promise<IProject[]> {
+        const projects = await this.projectRepository.findProjectsByAuthorId(authorId);
         return projects;
     }
 
@@ -26,7 +26,7 @@ export class UCProject {
         if(!projectFound) throw new Error('The project does not exist');
 
         // Verify that editor matches with the project autor.
-        if(editorArg != projectFound.author_id) throw new Error("You dont have permissions");
+        if(editorArg != projectFound.authorId) throw new Error('You dont have permissions');
 
         // Core
         const updatedProject = await this.projectRepository.updateProject(idArg, nameArg);
@@ -42,7 +42,7 @@ export class UCProject {
         if(!projectFound) throw new Error('The project does not exist');
 
         // Verify that editor matches with the project autor.
-        if(editorArg != projectFound.author_id) throw new Error("You dont have permissions");
+        if(editorArg != projectFound.authorId) throw new Error('You dont have permissions');
 
         // Deletes project's tasks.
         await this.taskRepository.deleteTasksByProjectId(idArg);

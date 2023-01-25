@@ -1,6 +1,6 @@
-import { ProjectRepository } from "../Domain/project.repository";
-import { ProjectModel } from "./project.model";
-import { IProject } from "../Domain/project.entity";
+import { ProjectRepository } from '../Domain/project.repository';
+import { ProjectModel } from './project.model';
+import { IProject } from '../Domain/project.entity';
 
 export class ProjectDatabaseRepository implements ProjectRepository {
     
@@ -9,8 +9,8 @@ export class ProjectDatabaseRepository implements ProjectRepository {
         return project;
     }
 
-    async findProjectsByAuthorId(author_id: string): Promise<IProject[]> {   
-        const projects = await ProjectModel.find({ author_id });
+    async findProjectsByAuthorId(authorId: string): Promise<IProject[]> {   
+        const projects = await ProjectModel.find({ authorId });
         return projects;
     }
 
@@ -19,7 +19,7 @@ export class ProjectDatabaseRepository implements ProjectRepository {
             const projectModel = new ProjectModel(project);
             const savedProject = await projectModel.save();
             return savedProject;
-        } catch(e) { console.error({ at: `${__dirname} => registerProject`, message: e }) }
+        } catch(e) { console.error({ at: `${__dirname} => registerProject`, message: e }); }
     }
 
     async updateProject(ID: string, name: string): Promise<IProject | null> {

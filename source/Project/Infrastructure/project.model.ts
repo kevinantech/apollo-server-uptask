@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { IProject } from "../Domain/project.entity";
+import { Schema, model } from 'mongoose';
+import { IProject } from '../Domain/project.entity';
 
 const ProjectSchema = new Schema<IProject>(
     {
@@ -18,7 +18,7 @@ const ProjectSchema = new Schema<IProject>(
             required: true
         }
         ,
-        author_id: {
+        authorId: {
             type: String,
             required: true,
             ref: 'User'

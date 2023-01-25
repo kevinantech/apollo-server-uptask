@@ -1,6 +1,6 @@
-import { ProjectRepository } from "../../project/Domain/project.repository";
-import { TaskRepository } from "../Domain/task.repository";
-import { Task } from "../Domain/task.value";
+import { ProjectRepository } from '../../project/Domain/project.repository';
+import { TaskRepository } from '../Domain/task.repository';
+import { Task } from '../Domain/task.value';
 
 export class UCTask {
     constructor(private readonly taskRepository: TaskRepository, private readonly projectRepository: ProjectRepository){}
@@ -10,7 +10,7 @@ export class UCTask {
             ID: string; 
             name: string; 
             status: boolean; 
-            project_id: string;
+            projectId: string;
         }[]> {
         
         // Checks that the project exists.
@@ -18,7 +18,7 @@ export class UCTask {
         if(!projectFound) throw new Error('The project does not exist');
 
         // Checks that the user matches with the author of the project.
-        if(userArg != projectFound.author_id) throw new Error('You dont have permissions');
+        if(userArg != projectFound.authorId) throw new Error('You dont have permissions');
 
         const tasks = await this.taskRepository.findTasksByProjectId(projectArg);
         return tasks;
@@ -29,7 +29,7 @@ export class UCTask {
             ID: string; 
             name: string; 
             status: boolean; 
-            project_id: string;
+            projectId: string;
         }> {
 
         // Checks that the project exists.
@@ -37,13 +37,13 @@ export class UCTask {
         if(!projectFound) throw new Error('The project does not exist');
 
         // Checks that the creador of the task matches with the author of the project.
-        if(authorArg != projectFound.author_id) throw new Error('You dont have permissions');
+        if(authorArg != projectFound.authorId) throw new Error('You dont have permissions');
 
         const task = new Task(nameArg, projectArg, authorArg);
         const taskCreated = await this.taskRepository.registerTask(task);
         if(!taskCreated) throw new Error('Could not save');
-        const { ID, name, status, project_id } = taskCreated;
-        return { ID, name, status, project_id };
+        const { ID, name, status, projectId } = taskCreated;
+        return { ID, name, status, projectId };
     }
 
     public async Update(idArg: string, editorArg: string, nameArg?: string, statusArg?: boolean): 
@@ -51,7 +51,7 @@ export class UCTask {
             ID: string; 
             name: string; 
             status: boolean; 
-            project_id: string; 
+            projectId: string; 
         } | null> {
         
         // Checks that the task exists.
@@ -59,12 +59,12 @@ export class UCTask {
         if(!taskFound) throw new Error('The task does not exist');
 
         // Checks that the editor matches with the author of the task.
-        if(editorArg != taskFound.author_id) throw new Error('You dont have permissions'); 
+        if(editorArg != taskFound.authorId) throw new Error('You dont have permissions'); 
           
         const taskUpdated = await this.taskRepository.updateTask(idArg, nameArg, statusArg);
         if(!taskUpdated) throw new Error('Could not update');
-        const { ID, name, status, project_id } = taskUpdated;
-        return { ID, name, status, project_id }; 
+        const { ID, name, status, projectId } = taskUpdated;
+        return { ID, name, status, projectId }; 
     }
 
     public async Delete(idArg: string, editorArg: string): Promise<{ ID: string; }> {
@@ -74,7 +74,7 @@ export class UCTask {
         if(!taskFound) throw new Error('The task does not exist');
 
         // Checks that the editor matches with the author of the task.
-        if(editorArg != taskFound.author_id) throw new Error('You dont have permissions'); 
+        if(editorArg != taskFound.authorId) throw new Error('You dont have permissions'); 
           
         const taskUpdated = await this.taskRepository.deleteTask(idArg);
         if(!taskUpdated) throw new Error('Could not update');

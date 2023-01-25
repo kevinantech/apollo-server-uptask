@@ -1,4 +1,4 @@
-const TypeDefs = `
+const typeDefs = `
 
     # RESPONSE TYPES
     
@@ -92,4 +92,4 @@ const TypeDefs = `
 
     }
 `;
-export {TypeDefs};
+export { typeDefs };

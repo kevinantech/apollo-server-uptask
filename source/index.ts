@@ -1,19 +1,19 @@
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone"
-import { Resolvers } from "./GraphQL/resolvers"
-import { TypeDefs } from "./GraphQL/typeDefs"
-import { AuthToken } from "./GraphQL/context.values"
-import { dbConnect } from "../config"
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+import { resolvers } from './GraphQL/resolvers';
+import { typeDefs } from './GraphQL/typeDefs';
+import { AuthToken } from './GraphQL/context.values';
+import { connectDatabase } from '../config';
 
-const Bootstrap = async () => {
-    dbConnect()
-    const Server = new ApolloServer({ typeDefs: TypeDefs, resolvers: Resolvers })
-    const { url } = await startStandaloneServer(Server, {
+const bootstrap = async () => {
+    connectDatabase();
+    const server = new ApolloServer({ typeDefs, resolvers });
+    const { url } = await startStandaloneServer(server, {
         listen: { port: 4000 },
         context: async ({ req }) => ({
-            authorization: AuthToken(req.headers.authorization)
+            authorization: AuthToken(req.headers.authorization),
         })
-    })
-    console.log(`🚀  Server ready at: ${url}`)
-}
-Bootstrap()
+    });
+    console.log(`🚀  Server ready at: ${url}`);
+};
+bootstrap();
